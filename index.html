@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Pihu Mobile Shop - Repair & Payment</title>
+
+<style>
+body{
+  font-family: Arial;
+  background:#f2f2f2;
+}
+
+.container{
+  max-width:500px;
+  margin:auto;
+  background:white;
+  padding:20px;
+  margin-top:30px;
+  border-radius:10px;
+  box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+input, textarea{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border-radius:5px;
+  border:1px solid #ccc;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:15px;
+  background:#25D366;
+  color:white;
+  border:none;
+  border-radius:5px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.paybtn{
+  background:#28a745;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>Pihu Mobile Shop</h2>
+
+<input type="text" id="name" placeholder="Your Name" required>
+<input type="text" id="phone" placeholder="Mobile Number" required>
+<textarea id="problem" placeholder="Describe Problem" required></textarea>
+
+<input type="number" id="amount" placeholder="Enter Repair Amount">
+
+<button class="paybtn" onclick="payNow()">Pay Now</button>
+
+<label>Upload Payment Screenshot (Optional):</label>
+<input type="file" id="screenshot">
+
+<button onclick="sendWhatsApp()">Submit Details</button>
+
+</div>
+
+<script>
+
+function generateTrackingID() {
+    var date = new Date();
+    var unique = Math.floor(Math.random() * 1000);
+    return "PM-" + date.getFullYear().toString().slice(-2) +
+           (date.getMonth()+1) +
+           date.getDate() +
+           unique;
+}
+
+var trackingID = generateTrackingID();
+
+function payNow(){
+var amt = document.getElementById("amount").value;
+
+var upiLink = "upi://pay?pa=6388806014@okbizaxis&pn=Pihu%20Mobile%20Shop&am="+amt+"&cu=INR";
+
+window.location.href = upiLink;
+}
+
+function sendWhatsApp(){
+
+var name = document.getElementById("name").value;
+var phone = document.getElementById("phone").value;
+var problem = document.getElementById("problem").value;
+var amount = document.getElementById("amount").value;
+
+var message = "Repair + Payment Details%0A"
++ "Tracking ID: " + trackingID + "%0A"
++ "Name: " + name + "%0A"
++ "Phone: " + phone + "%0A"
++ "Problem: " + problem + "%0A"
++ "Amount: ₹" + amount + "%0A"
++ "Payment Screenshot Attached Separately";
+
+var url = "https://wa.me/918318511650?text=" + message;
+
+window.open(url, '_blank');
+}
+
+</script>
+
+</body>
+</html>
